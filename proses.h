@@ -1,99 +1,69 @@
-#include<iostream>
-#include<fstream>
-#include <sstream>
 using namespace std;
 class Proses {
 public:
-  void cetak() { cout << "anda sebagai proses \n"; }
-  int toint(string bilangan) {
-    int p;
-    stringstream ss;
-    ss << bilangan;
-    ss >> p;
-    return p;
-  }
-  /*int membilang(string bilangan) {
-    int p;
-   switch (bilangan) {
-  case "0" : p=0; break;
-   case "1" : p=1; break;
-   case "2" : p=2; break;
-  case "3" : cout << "tiga"; break;
-   case "4" : p=4; break;
-   case "5" : cout << "lima"; break;
-  case "6" : cout << "enam"; break;
-   case "7" : cout << "tujuh"; break;
-   case "8" :p=8; break;
-   case "9" : cout << "sembilan"; break;
-   case "10" : cout << "sepuluh"; break;
-  case "11" : cout << "sebelas"; break;
-   default : cout << "di luar range\n";
-  }
-    return p;
-  }*/
   void getData() {
-    ambil_data.open("../pra_data/input.txt");
+    bool dosenA = true, mk1 = true, mk2 = true, mk3 = true,
+          nilai1 = true, nilai2 = true,
+         nilai3 = true;
+    ambil_data.open("data/input.txt");
     while (!ambil_data.eof()) {
-      getline(ambil_data, data_file[index]);
-      //  ambil_data >> data_file[index];
-      index += 1;
+      if (dosenA == true) {
+        ambil_data >> dosen;
+        dosenA = false;
+      } else if (mk1 == true) {
+        ambil_data >> mk[0];
+        mk1 = false;
+      } else if (mk2 == true) {
+        ambil_data >> mk[1];
+        mk2 = false;
+      } else if (mk3 == true) {
+        ambil_data >> mk[2];
+        mk3 = false;
+      }  else if (nilai1 == true) {
+        ambil_data >> nilai[0];
+        nilai1 = false;
+      } else if (nilai2 == true) {
+        ambil_data >> nilai[1];
+        nilai2 = false;
+      } else if (nilai3 == true) {
+        ambil_data >> nilai[2];
+        nilai3 = false;
+      } 
     }
-    
-
-    /*
-                         if (jarak <= 3){
-                                 total = jumlah*21000;
-                                 cout << " Ongkir : 15000\n";
-                                 if (total > 25000){
-                                         cout << " Diskon Ongkir: 3000\n";
-                                         x = total-3000;
-                                         cout << " Total : " << x << endl;
-                                 }
-                                 if (total > 50000){
-                                         cout << " Diskon Ongkir: 5000 + 15%
-       Pembelian\n"; diskon = total*15/100; x = total-diskon-5000; cout << "
-       Total : " << x << endl;
-                                 }
-                                 if (total > 150000){
-                                         cout << " Diskon Ongkir: 8000 + 35%
-       Pembelian\n"; diskon = total*35/100; x = total-diskon-8000; cout << "
-       Total : " << x << endl;
-                                 }
-                         }
-                         if (jarak > 3){
-                                 total = jumlah*21000;
-                                 cout << " Ongkir : 25000\n";
-                                 if (total > 25000){
-                                         cout << " Diskon Ongkir: 3000\n";
-                                         x = total-3000;
-                                         cout << " Total : " << x << endl;
-                                 }
-                                 if (total > 50000){
-                                         cout << " Diskon Ongkir: 5000 + 15%
-       Pembelian\n"; diskon = total*15/100; x = total-diskon-5000; cout << "
-       Total : " << x << endl;
-                                 }
-                                 if (total > 150000){
-                                         cout << " Diskon Ongkir: 8000 + 35%
-       Pembelian\n"; diskon = total*35/100; x = total-diskon-8000; cout << "
-       Total : " << x << endl;
-                                 } */
     ambil_data.close();
-    nama = data_file[0];
-    plhn = data_file[1];
-    jumlah = toint(data_file[2]);
-    jarak = toint(data_file[3]);
-    cout << jumlah << endl;
-    // cout<<data_file[2];
+  }
+  void simpan() {
+    for (int i = 0; i < 3; i++) {
+      jumlah += nilai[i];
     }
-void toFile(){
-  
-}
+    float rata = jumlah / 3; 
+    max = nilai[0];
+    min = nilai[0];
+    for (int i = 1; i < 3; i++) {
+      if (nilai[i] > max) {
+        max = nilai[i];
+      }
+      if (nilai[i] < min) {
+        min = nilai[i];
+      }
+    }
+    tulis_data.open("data/proses.txt");
+    tulis_data << dosen << endl;
+    for (int i = 0; i < 3; i++) {
+      tulis_data << mk[i] << endl;
+    }
+    for (int i = 0; i < 3; i++) {
+      tulis_data << nilai[i] << endl;
+    }
+    tulis_data << max << endl;
+    tulis_data << min << endl;
+    tulis_data << rata;
+    tulis_data.close();
+  }
 
-  private:
-    ifstream ambil_data;
-    string data_file[30];
-    string nama, plhn;
-    int index = 0;
-    int jarak, total, jumlah, x, diskon, Proses, menu;
-  };
+private:
+  ifstream ambil_data;
+  ofstream tulis_data;
+  string dosen, mk[3];
+  int nilai[3], max, min, jumlah = 0;
+};

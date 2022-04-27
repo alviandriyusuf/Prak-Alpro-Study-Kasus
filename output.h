@@ -1,28 +1,27 @@
 using namespace std;
-
 class Output {
-	public :
-		void cetak(){
-			cout << "STRUK PEMBELIAN KELOMPOK JERUK \n";
-			cout << "Yang dibeli : \n";
-			cout << "  Ayam Goreng  -> " << data_file[3] << endl;
-			cout << "  Ayam Bakar   -> " << data_file[4] << endl;
-			cout << "Harga total Rp. " << data_file[0] << endl;
-			cout << "Diskon      Rp. " << data_file[1] << endl;
-			cout << "Harga Bayar Rp. " << data_file[2] << endl;
-		}
+public:
+  void cetak() {
+    cout << "Nama Dosen : " << data[0] << endl;
+    cout << "Mata Kuliah dan nilai :\n"
+      << data[1] << " = " << data[4] << "\n"
+         << data[2] << " = " << data[5] << "\n"
+         << data[3] << " = " << data[6] << endl;
+    cout << "Nilai Max : " << data[7] << endl;
+    cout << "Nilai Min : " << data[8] << endl;
+    cout << "Rata-rata : " << data[9] << endl;
+  }
+  void getData() {
+    ambil_data.open("data/proses.txt");
+    while (!ambil_data.eof()) {
+      ambil_data >> data[i];
+      i += 1;
+    }
+    ambil_data.close();
+  }
 
-		void getData(){
-			ambil_data.open("api_data.txt");
-			while(!ambil_data.eof()){
-				ambil_data >> data_file[index];
-				index += 1;
-			}
-			ambil_data.close();
-		}
-
-	private :
-		ifstream ambil_data;
-		string data_file[30];
-		int index = 0;
-};lsks
+private:
+  ifstream ambil_data;
+  string data[100];
+  int i = 0;
+};
